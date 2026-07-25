@@ -1,0 +1,81 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "NotchBox-arm64-apple-macosx-debug.exe": ["<NotchBox-arm64-apple-macosx-debug.exe>"]
+  "NotchBox-arm64-apple-macosx-debug.module": ["<NotchBox-arm64-apple-macosx-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<NotchBox-arm64-apple-macosx-debug.exe>","<NotchBox-arm64-apple-macosx-debug.module>"]
+  "test": ["<NotchBox-arm64-apple-macosx-debug.exe>","<NotchBox-arm64-apple-macosx-debug.module>"]
+default: "main"
+nodes:
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox":
+    is-mutated: true
+commands:
+  "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox-entitlement.plist":
+    tool: write-auxiliary-file
+    inputs: ["<entitlement-plist>","<com.apple.security.get-task-allow>"]
+    outputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox-entitlement.plist"]
+    description: "Write auxiliary file /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox-entitlement.plist"
+
+  "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ContentView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/FileLogger.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/IslandManager.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LayoutConstants.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicController.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicIslandView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/NotchBoxApp.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ScrubberView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeManager.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ViewHeightKey.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/WeatherManager.swift"]
+    outputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/sources"]
+    description: "Write auxiliary file /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/sources"
+
+  "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ContentView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/FileLogger.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/IslandManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LayoutConstants.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/NotchBoxApp.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/WeatherManager.swift.o"]
+    outputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.product/Objects.LinkFileList"
+
+  "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Library/Developer/CommandLineTools/usr/bin/swiftc"]
+    outputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+
+  "<NotchBox-arm64-apple-macosx-debug.exe>":
+    tool: phony
+    inputs: ["<NotchBox-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    outputs: ["<NotchBox-arm64-apple-macosx-debug.exe>"]
+
+  "<NotchBox-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ContentView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/FileLogger.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/IslandManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LayoutConstants.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/NotchBoxApp.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/WeatherManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/Modules/NotchBox.swiftmodule"]
+    outputs: ["<NotchBox-arm64-apple-macosx-debug.module>"]
+
+  "C.NotchBox-arm64-apple-macosx-debug.exe":
+    tool: shell
+    inputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ContentView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/FileLogger.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/IslandManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LayoutConstants.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/NotchBoxApp.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/WeatherManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.product/Objects.LinkFileList"]
+    outputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/NotchBox"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-L","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug","-o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox","-module-name","NotchBox","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-alias","-Xlinker","_NotchBox_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Library/Developer/CommandLineTools/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx13.0","-Xlinker","-add_ast_path","-Xlinker","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/Modules/NotchBox.swiftmodule","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g"]
+
+  "C.NotchBox-arm64-apple-macosx-debug.exe-entitlements":
+    tool: shell
+    inputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox-entitlement.plist"]
+    outputs: ["<NotchBox-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    description: "Applying debug entitlements to ./.build/arm64-apple-macosx/debug/NotchBox"
+    args: ["codesign","--force","--sign","-","--entitlements","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox-entitlement.plist","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox"]
+
+  "C.NotchBox-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ContentView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/FileLogger.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/IslandManager.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LayoutConstants.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicController.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicIslandView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/NotchBoxApp.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ScrubberView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeManager.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ViewHeightKey.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift","/Users/kushagra/Desktop/notchProject/Sources/NotchBox/WeatherManager.swift","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/sources"]
+    outputs: ["/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ContentView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/FileLogger.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/IslandManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LayoutConstants.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/NotchBoxApp.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/WeatherManager.swift.o","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/Modules/NotchBox.swiftmodule"]
+    description: "Compiling Swift Module 'NotchBox' (14 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","NotchBox","-emit-dependencies","-emit-module","-emit-module-path","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/Modules/NotchBox.swiftmodule","-output-file-map","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/output-file-map.json","-incremental","-c","@/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/sources","-I","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx13.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j10","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","NotchBox_main","-swift-version","5","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-Xcc","-g","-package-name","notchproject"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/kushagra/Desktop/notchProject/Sources/NotchBox/","/Users/kushagra/Desktop/notchProject/Package.swift","/Users/kushagra/Desktop/notchProject/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+
