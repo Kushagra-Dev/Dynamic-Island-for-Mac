@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Create the custom window with the exact notch size
         window = NotchWindow(
             contentRect: windowRect,
-            styleMask: [.borderless],
+            styleMask: [.borderless, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
@@ -63,24 +63,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.ignoresMouseEvents = false // We need to detect hover
         window.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle, .fullScreenAuxiliary]
         
-        // Position window at the top of the screen centered on the notch
-        window.setFrameOrigin(windowRect.origin)
-        
         AppDelegate.sharedWindow = window
         
         // Add the SwiftUI view using our custom hit-testing host view
         let hostingView = PassThroughHostingView(rootView: contentView)
         hostingView.islandManager = islandManager
         
-        let screen = NSScreen.main ?? NSScreen.screens[0]
-        let screenRect = screen.frame
+        updateWindowPosition()
         
-        let width = windowWidth
-        let height = expandedHeight
-        let x = screenRect.midX - (width / 2.0)
-        let y = screenRect.maxY - height
-        let newFrame = NSRect(x: x, y: y, width: width, height: height)
-        window.setFrame(newFrame, display: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(screenParametersDidChange), name: NSApplication.didChangeScreenParametersNotification, object: nil)
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name("UpdateIgnoresMouseEvents"), object: nil, queue: .main) { [weak window] notification in
             if let shouldIgnore = notification.object as? Bool {
@@ -102,6 +93,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupMainMenu()
         
         print("Window positioned at: \(window.frame)")
+    }
+    
+    @objc func screenParametersDidChange() {
+        updateWindowPosition()
+    }
+    
+    func updateWindowPosition() {
+        let notchRect = NotchGeometry.getNotchRect()
+        let windowWidth: CGFloat = LayoutConstants.expandedWidth + 100
+        let expandedHeight: CGFloat = 350
+        
+        let screen = NSScreen.main ?? NSScreen.screens.first!
+        let screenRect = screen.frame
+        
+        let width = windowWidth
+        let height = expandedHeight
+        
+        // Always center horizontally based on the actual detected notch/screen
+        let x = notchRect.midX - (width / 2.0)
+        let y = screenRect.maxY - height
+        
+        let newFrame = NSRect(x: x, y: y, width: width, height: height)
+        window.setFrame(newFrame, display: true)
     }
     
     func setupMainMenu() {
@@ -160,8 +174,8 @@ class PassThroughHostingView<Content: View>: NSHostingView<Content> {
         // Convert point to local coordinates (origin at top-left because NSHostingView is flipped)
         let localPoint = self.convert(point, from: self.superview)
         
-        let collapsedWidth: CGFloat = 185
-        let collapsedHeight: CGFloat = 38
+        let collapsedWidth: CGFloat = LayoutConstants.collapsedWidth
+        let collapsedHeight: CGFloat = LayoutConstants.collapsedHeight
         
         let isExpanded = manager.isExpanded
         let width = isExpanded ? (manager.currentMode == .teleprompter ? LayoutConstants.expandedWidth + 70 : LayoutConstants.expandedWidth) : collapsedWidth

@@ -1,0 +1,5 @@
+*.dmg
+*.zip
+
+.build/
+NotchBox.app/
