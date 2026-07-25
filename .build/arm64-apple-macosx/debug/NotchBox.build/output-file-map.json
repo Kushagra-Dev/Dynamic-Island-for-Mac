@@ -2,12 +2,26 @@
   "": {
     "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/primary.swiftdeps"
   },
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/APIKeyManager.swift": {
+    "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.d",
+    "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.swift.o",
+    "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.swiftdeps",
+    "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.dia"
+  },
   "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift": {
     "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.d",
     "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o",
     "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView~partial.swiftmodule",
     "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swiftdeps",
     "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.dia"
+  },
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ChatGPTService.swift": {
+    "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.d",
+    "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.swift.o",
+    "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService~partial.swiftmodule",
+    "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.swiftdeps",
+    "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.dia"
   },
   "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ContentView.swift": {
     "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ContentView.d",
@@ -113,6 +127,13 @@
     "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey~partial.swiftmodule",
     "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swiftdeps",
     "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.dia"
+  },
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VoiceRecognitionManager.swift": {
+    "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.d",
+    "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.swift.o",
+    "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.swiftdeps",
+    "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.dia"
   },
   "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift": {
     "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.d",

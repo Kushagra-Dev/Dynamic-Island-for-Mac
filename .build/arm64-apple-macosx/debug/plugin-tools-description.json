@@ -24,7 +24,15 @@
       "inputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/APIKeyManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ChatGPTService.swift"
         },
         {
           "kind" : "file",
@@ -88,6 +96,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VoiceRecognitionManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift"
         },
         {
@@ -107,7 +119,9 @@
       "moduleName" : "NotchBox",
       "moduleOutputPath" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/Modules/NotchBox.swiftmodule",
       "objects" : [
+        "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o",
+        "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ContentView.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/FileLogger.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/IslandManager.swift.o",
@@ -123,6 +137,7 @@
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeManager.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o",
+        "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/WeatherManager.swift.o"
       ],
@@ -173,7 +188,15 @@
       "outputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.swift.o"
         },
         {
           "kind" : "file",
@@ -237,6 +260,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.swift.o"
         },
         {
@@ -250,7 +277,9 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
+        "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/APIKeyManager.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift",
+        "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ChatGPTService.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ContentView.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/FileLogger.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/IslandManager.swift",
@@ -266,6 +295,7 @@
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeManager.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ViewHeightKey.swift",
+        "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VoiceRecognitionManager.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/WeatherManager.swift"
       ],
@@ -284,7 +314,9 @@
       "-package-name",
       "notchproject",
       "-c",
+      "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/APIKeyManager.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift",
+      "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ChatGPTService.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ContentView.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/FileLogger.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/IslandManager.swift",
@@ -300,6 +332,7 @@
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeManager.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ViewHeightKey.swift",
+      "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VoiceRecognitionManager.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/WeatherManager.swift",
       "-I",
@@ -389,7 +422,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/APIKeyManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ChatGPTService.swift"
         },
         {
           "kind" : "file",
@@ -453,6 +494,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VoiceRecognitionManager.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift"
         },
         {
@@ -471,7 +516,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.swift.o"
         },
         {
           "kind" : "file",
@@ -532,6 +585,10 @@
         {
           "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.swift.o"
         },
         {
           "kind" : "file",

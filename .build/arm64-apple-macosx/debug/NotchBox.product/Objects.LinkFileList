@@ -1,4 +1,6 @@
+/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/APIKeyManager.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/AlertIslandView.swift.o
+/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ChatGPTService.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ContentView.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/FileLogger.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/IslandManager.swift.o
@@ -14,5 +16,6 @@
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeManager.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o
+/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VoiceRecognitionManager.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/VolumeScrubberView.swift.o
 /Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/WeatherManager.swift.o

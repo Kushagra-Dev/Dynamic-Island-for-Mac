@@ -1,4 +1,6 @@
+/Users/kushagra/Desktop/notchProject/Sources/NotchBox/APIKeyManager.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/AlertIslandView.swift
+/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ChatGPTService.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/ContentView.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/FileLogger.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/IslandManager.swift
@@ -14,5 +16,6 @@
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeManager.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/ViewHeightKey.swift
+/Users/kushagra/Desktop/notchProject/Sources/NotchBox/VoiceRecognitionManager.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/VolumeScrubberView.swift
 /Users/kushagra/Desktop/notchProject/Sources/NotchBox/WeatherManager.swift

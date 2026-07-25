@@ -38,6 +38,10 @@ cat > "$APP_BUNDLE/Contents/Info.plist" <<EOF
     <string>This app requires access to Apple Events to control Music.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>This app requires access to your location to display local weather in the NotchBox.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>This app requires access to speech recognition for the AI teleprompter.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app requires access to the microphone for the AI teleprompter.</string>
 </dict>
 </plist>
 EOF

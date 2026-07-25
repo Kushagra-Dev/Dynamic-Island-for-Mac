@@ -34,6 +34,9 @@ class MusicController: ObservableObject {
     typealias MRGetNowPlayingInfo = @convention(c) (DispatchQueue, @escaping ([String: Any]?) -> Void) -> Void
     private var getNowPlayingInfoFunc: MRGetNowPlayingInfo?
     
+    // Serial queue to prevent AppleScript concurrent execution crashes
+    private let appleScriptQueue = DispatchQueue(label: "com.notchbox.applescriptQueue")
+    
     init() {
         loadMediaRemote()
         
@@ -117,7 +120,7 @@ class MusicController: ObservableObject {
         return "none"
         """
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        appleScriptQueue.async {
             var error: NSDictionary?
             if let scriptObject = NSAppleScript(source: script) {
                 let output = scriptObject.executeAndReturnError(&error)
@@ -271,7 +274,7 @@ class MusicController: ObservableObject {
     
     private func updateVolume() {
         let script = "output volume of (get volume settings)"
-        DispatchQueue.global(qos: .utility).async {
+        appleScriptQueue.async {
             var error: NSDictionary?
             if let appleScript = NSAppleScript(source: script) {
                 let result = appleScript.executeAndReturnError(&error)
@@ -370,7 +373,7 @@ class MusicController: ObservableObject {
     }
     
     private func executeApplescriptAsync(_ script: String) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        appleScriptQueue.async {
             var error: NSDictionary?
             if let scriptObject = NSAppleScript(source: script) {
                 scriptObject.executeAndReturnError(&error)
