@@ -42,5 +42,12 @@ cat > "$APP_BUNDLE/Contents/Info.plist" <<EOF
 </plist>
 EOF
 
+# Clear any extended attributes to prevent Gatekeeper errors locally
+xattr -rc "$APP_BUNDLE"
+
+# Apply an ad-hoc signature to the complete App Bundle (including the Info.plist)
+echo "Code signing App Bundle..."
+codesign --force --deep --sign - "$APP_BUNDLE"
+
 echo "Running NotchBox..."
 open "$APP_BUNDLE"
