@@ -1,9 +1,18 @@
 import CoreGraphics
 
 struct LayoutConstants {
+    // Dynamic values for collapsed state based on physical screen notch
+    static var collapsedWidth: CGFloat {
+        return NotchGeometry.getNotchRect().width
+    }
+    
+    static var collapsedHeight: CGFloat {
+        return NotchGeometry.getNotchRect().height
+    }
+    
     // Make these computed properties so they scale perfectly on ANY device
     static var expandedWidth: CGFloat {
-        let notchWidth = NotchGeometry.getNotchRect().width
+        let notchWidth = collapsedWidth
         // Keep the exact same wide aspect ratio relative to the device's actual notch!
         return max(420, notchWidth * 2.27)
     }

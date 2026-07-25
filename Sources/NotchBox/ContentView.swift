@@ -14,8 +14,8 @@ struct ContentView: View {
     @State private var dragOffset: CGFloat = 0
     
     // Exact notch size calculated dynamically
-    let collapsedWidth: CGFloat = NotchGeometry.getNotchRect().width
-    let collapsedHeight: CGFloat = NotchGeometry.getNotchRect().height
+    let collapsedWidth: CGFloat = LayoutConstants.collapsedWidth
+    let collapsedHeight: CGFloat = LayoutConstants.collapsedHeight
     
     private var currentExpandedWidth: CGFloat {
         if islandManager.currentMode == .teleprompter {

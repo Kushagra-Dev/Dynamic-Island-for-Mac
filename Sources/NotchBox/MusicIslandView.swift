@@ -8,7 +8,7 @@ struct MusicIslandView: View {
     
     let expandedWidth: CGFloat = LayoutConstants.expandedWidth
     let expandedHeight: CGFloat = LayoutConstants.expandedHeight
-    let collapsedHeight: CGFloat = NotchGeometry.getNotchRect().height
+    let collapsedHeight: CGFloat = LayoutConstants.collapsedHeight
     
     var body: some View {
         // Content VStack is the SOLE layout driver — its intrinsic height determines the island size.

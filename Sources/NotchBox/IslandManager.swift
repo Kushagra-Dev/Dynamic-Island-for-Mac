@@ -61,7 +61,7 @@ class IslandManager: ObservableObject {
         let x = location.x
         
         let expandedWidth: CGFloat = currentMode == .teleprompter ? (LayoutConstants.expandedWidth + 70) : LayoutConstants.expandedWidth
-        let collapsedWidth: CGFloat = 185
+        let collapsedWidth: CGFloat = LayoutConstants.collapsedWidth
         let currentWidth = isExpanded ? expandedWidth : collapsedWidth
         
         let minX = screen.frame.midX - (currentWidth / 2) - 20
@@ -86,7 +86,7 @@ class IslandManager: ObservableObject {
                 }
             }
         }// Define INTERACTIVE bounds for click-through
-        var visualHeight: CGFloat = 38.0
+        var visualHeight: CGFloat = LayoutConstants.collapsedHeight
         if isExpanded {
             visualHeight = self.dynamicHeight + 10.0 // Add slight padding for interactive bounds
         }
