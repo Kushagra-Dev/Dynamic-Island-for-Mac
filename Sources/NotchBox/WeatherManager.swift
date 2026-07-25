@@ -49,30 +49,100 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         // Only fetch once, then rely on timer for updates
         locationManager.stopUpdatingLocation()
         
+        DispatchQueue.main.async {
+            if self.locationName == "Location unavailable" || self.locationName == "Loading..." {
+                self.locationName = "Locating..."
+            }
+        }
+        
         fetchWeather(lat: location.coordinate.latitude, lon: location.coordinate.longitude)
         reverseGeocode(location: location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location error: \(error.localizedDescription)")
-        // Fallback to a default location (New Delhi)
+        
+        // We do NOT stopUpdatingLocation here. If it's a temporary error (like locationUnknown), it might recover.
+        
         DispatchQueue.main.async {
-            self.locationName = "Location unavailable"
+            if self.locationName == "Loading..." {
+                self.locationName = "Locating (IP Fallback)..."
+            }
         }
-        fetchWeather(lat: 28.6139, lon: 77.2090)
+        
+        // If we haven't loaded any data yet, attempt IP-based location fallback
+        if !isLoaded {
+            fetchIPLocation()
+        }
+    }
+    
+    // MARK: - IP Location Fallback
+    private func fetchIPLocation() {
+        guard let url = URL(string: "http://ip-api.com/json/") else { return }
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else { return }
+            guard let data = data, error == nil else {
+                // Absolute worst case fallback if even IP fails
+                if !self.isLoaded {
+                    DispatchQueue.main.async {
+                        self.locationName = "Fallback City"
+                    }
+                    self.fetchWeather(lat: 28.6139, lon: 77.2090)
+                }
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let status = json["status"] as? String, status == "success",
+                   let lat = json["lat"] as? Double,
+                   let lon = json["lon"] as? Double,
+                   let city = json["city"] as? String {
+                    
+                    DispatchQueue.main.async {
+                        self.locationName = city
+                    }
+                    self.fetchWeather(lat: lat, lon: lon)
+                } else {
+                    if !self.isLoaded {
+                        DispatchQueue.main.async { self.locationName = "Fallback City" }
+                        self.fetchWeather(lat: 28.6139, lon: 77.2090)
+                    }
+                }
+            } catch {
+                if !self.isLoaded {
+                    DispatchQueue.main.async { self.locationName = "Fallback City" }
+                    self.fetchWeather(lat: 28.6139, lon: 77.2090)
+                }
+            }
+        }.resume()
     }
     
     // MARK: - Geocoding
     private func reverseGeocode(location: CLLocation) {
         geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
-            guard let self = self, let placemark = placemarks?.first else { return }
+            guard let self = self else { return }
+            
             DispatchQueue.main.async {
+                if let error = error {
+                    print("Geocode error: \(error.localizedDescription)")
+                    // Apple geocoder is heavily rate limited on restarts. Fallback gracefully.
+                    self.locationName = "Local Area"
+                    return
+                }
+                
+                guard let placemark = placemarks?.first else {
+                    self.locationName = "Unknown"
+                    return
+                }
+                
                 if let city = placemark.locality {
                     self.locationName = city
                 } else if let area = placemark.administrativeArea {
                     self.locationName = area
                 } else {
-                    self.locationName = "Unknown"
+                    self.locationName = "Local Area"
                 }
             }
         }

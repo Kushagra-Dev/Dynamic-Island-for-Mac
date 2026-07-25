@@ -6,6 +6,16 @@ enum TimeMode: String, Equatable, CaseIterable {
     case clock = "Clock"
     case stopwatch = "Stopwatch"
     case timer = "Timer"
+    case alarm = "Alarm"
+}
+
+struct Alarm: Identifiable {
+    let id = UUID()
+    var hour: Int
+    var minute: Int
+    var isEnabled: Bool = true
+    var lastTriggeredDate: String = "" // Keep track of last trigger to avoid re-triggering in the same minute
+    var isEphemeral: Bool = false // True for snooze alarms that should not appear in the UI list
 }
 
 class TimeManager: ObservableObject {
@@ -13,7 +23,10 @@ class TimeManager: ObservableObject {
     
     // Global tick timer
     private var cancellable: AnyCancellable?
+    
+    // Audio State
     private var timerSound: NSSound?
+    private var soundTimer: AnyCancellable?
     
     // --- CLOCK STATE ---
     @Published var clockTimeString: String = ""
@@ -57,6 +70,20 @@ class TimeManager: ObservableObject {
     @Published var timerFinished: Bool = false
     private var timerEndTime: Date?
     
+    // --- ALARM STATE ---
+    @Published var alarms: [Alarm] = []
+    @Published var alarmRinging: Bool = false
+    
+    // MARK: - UI Sizing State (Moved from View to fix hidden measurement sync)
+    @Published var isEditingCustomTimer = false
+    @Published var customTimerHours: Int = 0
+    @Published var customTimerMinutes: Int = 10
+    @Published var customTimerSeconds: Int = 0
+    
+    @Published var isAddingAlarm = false
+    @Published var newAlarmHour: Int = 8
+    @Published var newAlarmMinute: Int = 0
+    
     // Colon blink timer
     private var colonTimer: AnyCancellable?
     
@@ -86,6 +113,7 @@ class TimeManager: ObservableObject {
         if currentSecond != lastSecond {
             lastSecond = currentSecond
             updateClock(now: now)
+            checkAlarms(now: now)
         }
         
         if stopwatchRunning, let start = stopwatchStartTime {
@@ -98,18 +126,90 @@ class TimeManager: ObservableObject {
                 timerRemaining = 0
                 timerRunning = false
                 timerFinished = true
-                if let sound = NSSound(named: "Glass") {
-                    sound.volume = 1.0
-                    sound.loops = true
-                    sound.play()
-                    self.timerSound = sound
-                } else {
-                    NSSound.beep()
-                }
+                playNoticeableAlarmSound()
             } else {
                 timerRemaining = remaining
             }
         }
+    }
+    
+    private func checkAlarms(now: Date) {
+        let calendar = Calendar.current
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
+        
+        let dateString = dateFormatter.string(from: now)
+        
+        var anyTriggered = false
+        for i in 0..<alarms.count {
+            if alarms[i].isEnabled && alarms[i].hour == currentHour && alarms[i].minute == currentMinute {
+                // Check if it already fired today
+                if alarms[i].lastTriggeredDate != dateString {
+                    alarms[i].lastTriggeredDate = dateString
+                    anyTriggered = true
+                }
+            }
+        }
+        
+        if anyTriggered {
+            alarmRinging = true
+            // If we are not currently in the alarm tab, maybe switch to it? (Optional, but good UX)
+            if activeMode != .alarm {
+                setMode(.alarm)
+            }
+            playNoticeableAlarmSound()
+            
+            // Clean up ephemeral snooze alarms that just fired
+            alarms.removeAll { $0.isEphemeral && $0.lastTriggeredDate == dateString }
+        }
+    }
+    
+    // --- SOUND LOGIC ---
+    private func playNoticeableAlarmSound() {
+        stopAudioOnly()
+        
+        let ringtoneURL = URL(fileURLWithPath: "/System/Library/PrivateFrameworks/ToneLibrary.framework/Versions/A/Resources/Ringtones/Opening.m4r")
+        
+        if let sound = NSSound(contentsOf: ringtoneURL, byReference: false) {
+            sound.volume = 1.0
+            sound.loops = true
+            sound.play()
+            timerSound = sound
+        } else {
+            // Fallback for older macOS versions where Opening.m4r isn't at the expected path
+            soundTimer = Timer.publish(every: 0.8, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+                if let fallback = NSSound(named: "Ping") ?? NSSound(named: "Glass") {
+                    fallback.volume = 1.0
+                    fallback.play()
+                }
+            }
+        }
+    }
+    
+    func stopAudioOnly() {
+        soundTimer?.cancel()
+        soundTimer = nil
+        timerSound?.stop()
+        timerSound = nil
+    }
+    
+    func stopSound() {
+        if timerFinished {
+            timerRemaining = timerInitial
+        }
+        timerFinished = false
+        alarmRinging = false
+        stopAudioOnly()
+    }
+    
+    func snoozeAlarm() {
+        stopSound()
+        let snoozeTime = Date().addingTimeInterval(9 * 60)
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: snoozeTime)
+        let minute = calendar.component(.minute, from: snoozeTime)
+        let newAlarm = Alarm(hour: hour, minute: minute, isEnabled: true, isEphemeral: true)
+        alarms.append(newAlarm)
     }
     
     // --- MODE SWITCHING ---
@@ -177,7 +277,7 @@ class TimeManager: ObservableObject {
     
     // --- TIMER LOGIC ---
     func timerToggle() {
-        self.timerSound?.stop()
+        stopSound()
         if timerRunning {
             timerRunning = false
             timerEndTime = nil
@@ -192,7 +292,7 @@ class TimeManager: ObservableObject {
     }
     
     func timerReset() {
-        self.timerSound?.stop()
+        stopSound()
         timerRunning = false
         timerRemaining = timerInitial
         timerEndTime = nil
@@ -200,7 +300,7 @@ class TimeManager: ObservableObject {
     }
     
     func setTimerDuration(_ seconds: TimeInterval) {
-        self.timerSound?.stop()
+        stopSound()
         timerRunning = false
         timerEndTime = nil
         timerInitial = seconds

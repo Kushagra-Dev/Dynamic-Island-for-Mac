@@ -13,23 +13,25 @@ struct MusicIslandView: View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 18) {
                 // Album Art
-                if let artwork = musicController.artwork {
-                    Image(nsImage: artwork)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: expandedHeight * 0.4, height: expandedHeight * 0.4)
-                        .clipShape(RoundedRectangle(cornerRadius: expandedHeight * 0.1, style: .continuous))
-                        .shadow(color: Color.black.opacity(0.4), radius: 10, x: 0, y: 5)
-                } else {
-                    RoundedRectangle(cornerRadius: expandedHeight * 0.1, style: .continuous)
-                        .fill(LinearGradient(gradient: Gradient(colors: [Color.purple.opacity(0.6), Color.blue.opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .frame(width: expandedHeight * 0.4, height: expandedHeight * 0.4)
-                        .overlay(
-                            Image(systemName: "music.note")
-                                .font(.system(size: 28, weight: .semibold))
-                                .foregroundColor(.white.opacity(0.8))
-                        )
-                        .shadow(color: Color.purple.opacity(0.3), radius: 10, x: 0, y: 5)
+                Group {
+                    if let artwork = musicController.artwork {
+                        Image(nsImage: artwork)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: expandedHeight * 0.4, height: expandedHeight * 0.4)
+                            .clipShape(RoundedRectangle(cornerRadius: expandedHeight * 0.1, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.4), radius: 10, x: 0, y: 5)
+                    } else {
+                        RoundedRectangle(cornerRadius: expandedHeight * 0.1, style: .continuous)
+                            .fill(LinearGradient(gradient: Gradient(colors: [Color.purple.opacity(0.6), Color.blue.opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .frame(width: expandedHeight * 0.4, height: expandedHeight * 0.4)
+                            .overlay(
+                                Image(systemName: "music.note")
+                                    .font(.system(size: 28, weight: .semibold))
+                                    .foregroundColor(.white.opacity(0.8))
+                            )
+                            .shadow(color: Color.purple.opacity(0.3), radius: 10, x: 0, y: 5)
+                    }
                 }
                 
                 // Track Info
@@ -50,6 +52,10 @@ struct MusicIslandView: View {
                 // Animated Waveform
                 WaveformView(isPlaying: musicController.isPlaying, color: musicController.dominantColor)
                     .frame(width: 44, height: 32)
+            }
+            .contentShape(Rectangle()) // Makes the entire HStack (even transparent space) clickable
+            .onTapGesture {
+                NSWorkspace.shared.launchApplication("Spotify")
             }
             .padding(.horizontal, 24)
             .padding(.top, 38)

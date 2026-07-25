@@ -177,6 +177,10 @@ struct WeatherIslandView: View {
         }
         .padding(.bottom, 22)
         .frame(width: expandedWidth)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            NSWorkspace.shared.launchApplication("Weather")
+        }
         .background(
             ZStack(alignment: .top) {
                 Color.black

@@ -15,6 +15,7 @@ class IslandManager: ObservableObject {
     @Published var currentMode: IslandMode = .music
     @Published var transitionEdge: Edge = .trailing
     @Published var dynamicHeight: CGFloat = 194.0
+    @Published var isLockedExpanded: Bool = false
     
     init() {
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { [weak self] notification in
@@ -68,15 +69,21 @@ class IslandManager: ObservableObject {
         // We use the dynamicHeight plus some padding to accommodate all views like the Timer.
         let hoverHeight = isExpanded ? max(215.0, self.dynamicHeight + 20.0) : 44.0
         
-        let isInsideHover = x >= minX && x <= maxX && yFromTop >= 0 && yFromTop <= hoverHeight
+        let isHovering = x >= minX && x <= maxX && yFromTop >= 0 && yFromTop <= hoverHeight
         
-        if isInsideHover && !isExpanded {
-            self.isExpanded = true
-        } else if !isInsideHover && isExpanded {
-            self.isExpanded = false
-        }
-        
-        // Define INTERACTIVE bounds for click-through
+        if isHovering {
+            if !isExpanded {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                    isExpanded = true
+                }
+            }
+        } else {
+            if isExpanded && !isLockedExpanded {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                    isExpanded = false
+                }
+            }
+        }// Define INTERACTIVE bounds for click-through
         var visualHeight: CGFloat = 38.0
         if isExpanded {
             visualHeight = self.dynamicHeight + 10.0 // Add slight padding for interactive bounds

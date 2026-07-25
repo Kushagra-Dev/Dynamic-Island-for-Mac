@@ -205,6 +205,28 @@ struct ContentView: View {
         .animation(.spring(response: 0.36, dampingFraction: 0.72), value: islandManager.isExpanded)
         .animation(.spring(response: 0.36, dampingFraction: 0.72), value: intrinsicHeight)
         .animation(.spring(response: 0.35, dampingFraction: 0.82), value: islandManager.currentMode)
+        .onChange(of: timeManager.alarmRinging) { isRinging in
+            islandManager.isLockedExpanded = isRinging
+            if isRinging {
+                DispatchQueue.main.async {
+                    islandManager.switchTo(mode: .time)
+                    if !islandManager.isExpanded {
+                        islandManager.isExpanded = true
+                    }
+                }
+            }
+        }
+        .onChange(of: timeManager.timerFinished) { isFinished in
+            islandManager.isLockedExpanded = isFinished
+            if isFinished {
+                DispatchQueue.main.async {
+                    islandManager.switchTo(mode: .time)
+                    if !islandManager.isExpanded {
+                        islandManager.isExpanded = true
+                    }
+                }
+            }
+        }
     }
 }
 
