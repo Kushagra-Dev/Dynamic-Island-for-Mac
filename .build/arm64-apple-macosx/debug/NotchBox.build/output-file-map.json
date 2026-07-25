@@ -37,6 +37,13 @@
     "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LayoutConstants.swiftdeps",
     "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LayoutConstants.dia"
   },
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LyricsScrollerView.swift": {
+    "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView.d",
+    "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView.swift.o",
+    "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView~partial.swiftmodule",
+    "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView.swiftdeps",
+    "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView.dia"
+  },
   "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicController.swift": {
     "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.d",
     "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o",
@@ -64,6 +71,27 @@
     "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView~partial.swiftmodule",
     "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swiftdeps",
     "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.dia"
+  },
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/SpeedScrubberView.swift": {
+    "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView.d",
+    "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView.swift.o",
+    "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView~partial.swiftmodule",
+    "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView.swiftdeps",
+    "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView.dia"
+  },
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterIslandView.swift": {
+    "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView.d",
+    "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView.swift.o",
+    "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView~partial.swiftmodule",
+    "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView.swiftdeps",
+    "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView.dia"
+  },
+  "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterManager.swift": {
+    "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager.d",
+    "object": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager.swift.o",
+    "swiftmodule": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager.swiftdeps",
+    "diagnostics": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager.dia"
   },
   "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift": {
     "dependencies": "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.d",

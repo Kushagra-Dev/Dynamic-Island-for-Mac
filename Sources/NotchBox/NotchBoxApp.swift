@@ -20,18 +20,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let islandManager = IslandManager()
     let timeManager = TimeManager()
     let weatherManager = WeatherManager()
+    let teleprompterManager = TeleprompterManager()
     
     var cancellables = Set<AnyCancellable>()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         let notchRect = NotchGeometry.getNotchRect()
-        let expandedWidth: CGFloat = LayoutConstants.expandedWidth
-        let expandedHeight: CGFloat = 300 // Increased bounding box to allow for dynamic heights!
+        // Provide enough window width for the teleprompter mode (+70) and some padding
+        let windowWidth: CGFloat = LayoutConstants.expandedWidth + 100
+        let expandedHeight: CGFloat = 350 // Increased bounding box to allow for dynamic heights!
         
         let windowRect = NSRect(
-            x: notchRect.midX - (expandedWidth / 2),
+            x: notchRect.midX - (windowWidth / 2),
             y: notchRect.maxY - expandedHeight,
-            width: expandedWidth,
+            width: windowWidth,
             height: expandedHeight
         )
         
@@ -40,7 +42,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             musicController: musicController,
             islandManager: islandManager,
             timeManager: timeManager,
-            weatherManager: weatherManager
+            weatherManager: weatherManager,
+            teleprompterManager: teleprompterManager
         )
         
         // Create the custom window with the exact notch size
@@ -72,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let screen = NSScreen.main ?? NSScreen.screens[0]
         let screenRect = screen.frame
         
-        let width = expandedWidth
+        let width = windowWidth
         let height = expandedHeight
         let x = screenRect.midX - (width / 2.0)
         let y = screenRect.maxY - height
@@ -96,7 +99,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Hide the app from the Dock
         NSApp.setActivationPolicy(.accessory)
         
-        print("Window positioned at: \\(window.frame)")
+        setupMainMenu()
+        
+        print("Window positioned at: \(window.frame)")
+    }
+    
+    func setupMainMenu() {
+        let mainMenu = NSMenu()
+        
+        let appMenuItem = NSMenuItem()
+        let appMenu = NSMenu()
+        appMenu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        appMenuItem.submenu = appMenu
+        mainMenu.addItem(appMenuItem)
+        
+        let editMenuItem = NSMenuItem()
+        let editMenu = NSMenu(title: "Edit")
+        editMenu.addItem(NSMenuItem(title: "Undo", action: NSSelectorFromString("undo:"), keyEquivalent: "z"))
+        editMenu.addItem(NSMenuItem(title: "Redo", action: NSSelectorFromString("redo:"), keyEquivalent: "Z"))
+        editMenu.addItem(NSMenuItem.separator())
+        editMenu.addItem(NSMenuItem(title: "Cut", action: NSSelectorFromString("cut:"), keyEquivalent: "x"))
+        editMenu.addItem(NSMenuItem(title: "Copy", action: NSSelectorFromString("copy:"), keyEquivalent: "c"))
+        editMenu.addItem(NSMenuItem(title: "Paste", action: NSSelectorFromString("paste:"), keyEquivalent: "v"))
+        editMenu.addItem(NSMenuItem(title: "Select All", action: NSSelectorFromString("selectAll:"), keyEquivalent: "a"))
+        editMenuItem.submenu = editMenu
+        mainMenu.addItem(editMenuItem)
+        
+        NSApp.mainMenu = mainMenu
     }
 }
 
@@ -135,7 +164,7 @@ class PassThroughHostingView<Content: View>: NSHostingView<Content> {
         let collapsedHeight: CGFloat = 38
         
         let isExpanded = manager.isExpanded
-        let width = isExpanded ? LayoutConstants.expandedWidth : collapsedWidth
+        let width = isExpanded ? (manager.currentMode == .teleprompter ? LayoutConstants.expandedWidth + 70 : LayoutConstants.expandedWidth) : collapsedWidth
         
         let viewWidth = self.bounds.width
         

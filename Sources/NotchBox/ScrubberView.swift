@@ -6,6 +6,7 @@ struct ScrubberView: View {
     var isPlaying: Bool
     let duration: Double
     let onSeek: (Double) -> Void
+    @ObservedObject var islandManager: IslandManager
     
     @State private var localTime: Double = 0
     @State private var isDragging: Bool = false
@@ -55,11 +56,13 @@ struct ScrubberView: View {
                             DragGesture(minimumDistance: 0)
                                 .onChanged { value in
                                     isDragging = true
+                                    islandManager.isSwipingLocked = true
                                     let percent = value.location.x / geometry.size.width
                                     dragTime = min(max(Double(percent) * duration, 0), duration)
                                 }
                                 .onEnded { _ in
                                     isDragging = false
+                                    islandManager.isSwipingLocked = false
                                     localTime = dragTime // Instantly update locally to avoid jumping
                                     onSeek(dragTime)
                                     NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .default)

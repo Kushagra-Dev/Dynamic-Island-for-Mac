@@ -177,9 +177,13 @@ struct WeatherIslandView: View {
         }
         .padding(.bottom, 22)
         .frame(width: expandedWidth)
+        .frame(maxHeight: .infinity, alignment: .top)
         .contentShape(Rectangle())
         .onTapGesture {
-            NSWorkspace.shared.launchApplication("Weather")
+            if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.weather") {
+                let configuration = NSWorkspace.OpenConfiguration()
+                NSWorkspace.shared.openApplication(at: url, configuration: configuration, completionHandler: nil)
+            }
         }
         .background(
             ZStack(alignment: .top) {
@@ -226,5 +230,7 @@ struct AlertIslandView: View {
         .padding(.top, 42)
         .padding(.bottom, 24)
         .frame(width: expandedWidth)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .background(Color.black)
     }
 }

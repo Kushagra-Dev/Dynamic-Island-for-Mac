@@ -57,6 +57,7 @@ struct TimeIslandView: View {
         }
         .padding(.bottom, 20)
         .frame(width: expandedWidth)
+        .frame(maxHeight: .infinity, alignment: .top)
         .background(Color.black)
     }
     

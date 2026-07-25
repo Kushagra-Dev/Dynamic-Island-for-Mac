@@ -1,0 +1,13 @@
+Building project...
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[1/4] Write swift-version--1AB21518FC5DEDBE.txt
+[3/6] Compiling NotchBox MusicController.swift
+[4/6] Emitting module NotchBox
+[4/7] Write Objects.LinkFileList
+[5/7] Linking NotchBox
+[6/7] Applying NotchBox
+Build complete! (1.54s)
+Creating App Bundle...
+Running NotchBox...

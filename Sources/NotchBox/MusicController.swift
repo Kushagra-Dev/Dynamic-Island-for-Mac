@@ -4,6 +4,12 @@ import AppKit
 import SwiftUI
 import CoreImage
 
+struct LyricLine: Identifiable, Equatable {
+    let id = UUID()
+    let time: Double // in seconds
+    let text: String
+}
+
 class MusicController: ObservableObject {
     @Published var trackName: String = "No track playing"
     @Published var artistName: String = ""
@@ -16,7 +22,13 @@ class MusicController: ObservableObject {
     
     @Published var volume: Double = 50
     
+    @Published var lyrics: [LyricLine] = []
+    @Published var isFetchingLyrics: Bool = false
+    @Published var lyricsUnavailable: Bool = false
+    
     private var timer: AnyCancellable?
+    private var interpolationTimer: Timer?
+    private var lastTimerTick: Date = Date()
     
     // MediaRemote bindings for artwork
     typealias MRGetNowPlayingInfo = @convention(c) (DispatchQueue, @escaping ([String: Any]?) -> Void) -> Void
@@ -25,13 +37,26 @@ class MusicController: ObservableObject {
     init() {
         loadMediaRemote()
         
-        // Start polling every 1.5 seconds for snappier updates
+        // Start polling every 1.5 seconds for track changes and major syncs
         timer = Timer.publish(every: 1.5, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
                 self?.updateNowPlaying()
                 self?.updateVolume()
             }
+            
+        // Local interpolation for smooth lyrics and scrubber
+        lastTimerTick = Date()
+        interpolationTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            let now = Date()
+            let delta = now.timeIntervalSince(self.lastTimerTick)
+            self.lastTimerTick = now
+            
+            if self.isPlaying {
+                self.currentTime += delta
+            }
+        }
         
         updateNowPlaying()
         updateVolume()
@@ -118,8 +143,11 @@ class MusicController: ObservableObject {
                         DispatchQueue.main.async {
                             self.isPlaying = isPlaying
                             self.duration = max(dur, 1) // Prevent division by zero
-                            // Only sync position if the delta is significant to avoid stuttering against local interpolation
-                            if abs(self.currentTime - pos) > 1.5 {
+                            
+                            // Only sync position if the delta is significant to avoid stuttering against local interpolation.
+                            // Since AppleScript takes time to execute, 'pos' might be slightly stale, so we trust local interpolation
+                            // unless there's a major divergence (like user scrubbing or skipping).
+                            if abs(self.currentTime - pos) > 2.0 {
                                 self.currentTime = pos
                             }
                             
@@ -129,6 +157,7 @@ class MusicController: ObservableObject {
                             } else {
                                 self.trackName = title
                                 self.artistName = artist
+                                self.fetchLyrics(track: title, artist: artist)
                             }
                             
                             if !artworkUrl.isEmpty {
@@ -262,6 +291,82 @@ class MusicController: ObservableObject {
         volume = newVolume
         let script = "set volume output volume \(Int(newVolume))"
         executeApplescriptAsync(script)
+    }
+    
+    private var currentLyricsQuery: String = ""
+    
+    private func fetchLyrics(track: String, artist: String) {
+        let query = "\(track)-\(artist)"
+        guard query != currentLyricsQuery else { return }
+        currentLyricsQuery = query
+        
+        DispatchQueue.main.async {
+            self.isFetchingLyrics = true
+            self.lyricsUnavailable = false
+            self.lyrics = []
+        }
+        
+        guard let encodedTrack = track.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let encodedArtist = artist.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: "https://lrclib.net/api/get?track_name=\(encodedTrack)&artist_name=\(encodedArtist)") else {
+            DispatchQueue.main.async { self.lyricsUnavailable = true }
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.isFetchingLyrics = false
+            }
+            
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+               let syncedLyrics = json["syncedLyrics"] as? String,
+               !syncedLyrics.isEmpty {
+                let parsed = self.parseLRC(syncedLyrics)
+                DispatchQueue.main.async {
+                    self.lyrics = parsed
+                    self.lyricsUnavailable = parsed.isEmpty
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.lyricsUnavailable = true
+                }
+            }
+        }.resume()
+    }
+    
+    private func parseLRC(_ lrc: String) -> [LyricLine] {
+        var result: [LyricLine] = []
+        let lines = lrc.components(separatedBy: .newlines)
+        
+        // Regex to match [mm:ss.xx] or [mm:ss.xxx]
+        let pattern = "\\[(\\d{2}):(\\d{2})\\.(\\d{2,3})\\](.*)"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return [] }
+        
+        for line in lines {
+            if let match = regex.firstMatch(in: line, options: [], range: NSRange(location: 0, length: line.utf16.count)) {
+                if let minRange = Range(match.range(at: 1), in: line),
+                   let secRange = Range(match.range(at: 2), in: line),
+                   let msRange = Range(match.range(at: 3), in: line),
+                   let textRange = Range(match.range(at: 4), in: line) {
+                    
+                    let min = Double(line[minRange]) ?? 0
+                    let sec = Double(line[secRange]) ?? 0
+                    let msStr = String(line[msRange])
+                    let ms = (Double(msStr) ?? 0) / (msStr.count == 3 ? 1000.0 : 100.0)
+                    
+                    let time = (min * 60) + sec + ms
+                    let text = String(line[textRange]).trimmingCharacters(in: .whitespaces)
+                    
+                    if !text.isEmpty {
+                        result.append(LyricLine(time: time, text: text))
+                    }
+                }
+            }
+        }
+        return result
     }
     
     private func executeApplescriptAsync(_ script: String) {

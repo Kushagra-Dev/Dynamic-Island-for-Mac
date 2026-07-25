@@ -3,6 +3,7 @@ import SwiftUI
 struct VolumeScrubberView: View {
     var volume: Double
     let onSeek: (Double) -> Void
+    @ObservedObject var islandManager: IslandManager
     
     @State private var localVolume: Double = 0
     @State private var isDragging: Bool = false
@@ -15,10 +16,12 @@ struct VolumeScrubberView: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: "speaker.fill")
+            Image(systemName: progress == 0 ? "speaker.slash.fill" : "speaker.fill")
                 .font(.system(size: 11, weight: .medium, design: .rounded))
-                .foregroundColor(.white.opacity(0.6))
+                .foregroundColor(progress == 0 ? .red.opacity(0.8) : .white.opacity(0.6))
                 .frame(width: 36, alignment: .leading)
+                .scaleEffect(progress == 0 ? 1.2 : 1.0)
+                .animation(.spring(response: 0.3, dampingFraction: 0.5), value: progress == 0)
             
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
@@ -42,12 +45,14 @@ struct VolumeScrubberView: View {
                             DragGesture(minimumDistance: 0)
                                 .onChanged { value in
                                     isDragging = true
+                                    islandManager.isSwipingLocked = true
                                     let percent = value.location.x / geometry.size.width
                                     dragVolume = min(max(Double(percent) * 100.0, 0), 100.0)
                                     onSeek(dragVolume) // update instantly
                                 }
                                 .onEnded { _ in
                                     isDragging = false
+                                    islandManager.isSwipingLocked = false
                                     localVolume = dragVolume
                                     NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .default)
                                 }

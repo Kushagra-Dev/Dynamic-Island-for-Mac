@@ -3,6 +3,8 @@ import SwiftUI
 struct MusicIslandView: View {
     @ObservedObject var musicController: MusicController
     @Binding var showingVolume: Bool
+    @Binding var showingLyrics: Bool
+    @ObservedObject var islandManager: IslandManager
     
     let expandedWidth: CGFloat = LayoutConstants.expandedWidth
     let expandedHeight: CGFloat = LayoutConstants.expandedHeight
@@ -55,7 +57,10 @@ struct MusicIslandView: View {
             }
             .contentShape(Rectangle()) // Makes the entire HStack (even transparent space) clickable
             .onTapGesture {
-                NSWorkspace.shared.launchApplication("Spotify")
+                if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.spotify.client") {
+                    let configuration = NSWorkspace.OpenConfiguration()
+                    NSWorkspace.shared.openApplication(at: url, configuration: configuration, completionHandler: nil)
+                }
             }
             .padding(.horizontal, 24)
             .padding(.top, 38)
@@ -65,7 +70,8 @@ struct MusicIslandView: View {
                     volume: musicController.volume,
                     onSeek: { newVol in
                         musicController.setVolume(newVol)
-                    }
+                    },
+                    islandManager: islandManager
                 )
                 .padding(.horizontal, 24)
                 .padding(.top, 4)
@@ -77,7 +83,8 @@ struct MusicIslandView: View {
                     duration: musicController.duration,
                     onSeek: { newTime in
                         musicController.seek(to: newTime)
-                    }
+                    },
+                    islandManager: islandManager
                 )
                 .padding(.horizontal, 24)
                 .padding(.top, 4)
@@ -100,21 +107,32 @@ struct MusicIslandView: View {
                     }
                 }
                 
-                // Volume Toggle Button
+                // Toggle Buttons
                 HStack {
-                    Spacer()
                     InteractiveButton(systemName: showingVolume ? "music.note" : "speaker.wave.2.fill", size: 16) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                             showingVolume.toggle()
+                        }
+                    }
+                    Spacer()
+                    InteractiveButton(systemName: showingLyrics ? "quote.bubble.fill" : "quote.bubble", size: 16) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            showingLyrics.toggle()
                         }
                     }
                 }
                 .padding(.horizontal, 24)
             }
             .padding(.bottom, 6) // Reduced padding for compactness
+            
+            if showingLyrics {
+                LyricsScrollerView(musicController: musicController)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
         }
         .padding(.bottom, 10) // Reduced overall padding to make it compact
         .frame(width: expandedWidth)
+        .frame(maxHeight: .infinity, alignment: .top)
         // Blurred artwork glow as BACKGROUND
         .background(
             GeometryReader { geometry in

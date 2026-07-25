@@ -7,6 +7,7 @@ enum IslandMode: Hashable, Equatable {
     case time
     case weather
     case alert(title: String, systemImage: String)
+    case teleprompter
 }
 
 class IslandManager: ObservableObject {
@@ -16,6 +17,7 @@ class IslandManager: ObservableObject {
     @Published var transitionEdge: Edge = .trailing
     @Published var dynamicHeight: CGFloat = 194.0
     @Published var isLockedExpanded: Bool = false
+    @Published var isSwipingLocked: Bool = false
     
     init() {
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { [weak self] notification in
@@ -58,7 +60,7 @@ class IslandManager: ObservableObject {
         let yFromTop = screen.frame.height - location.y
         let x = location.x
         
-        let expandedWidth: CGFloat = LayoutConstants.expandedWidth
+        let expandedWidth: CGFloat = currentMode == .teleprompter ? (LayoutConstants.expandedWidth + 70) : LayoutConstants.expandedWidth
         let collapsedWidth: CGFloat = 185
         let currentWidth = isExpanded ? expandedWidth : collapsedWidth
         
@@ -110,6 +112,7 @@ class IslandManager: ObservableObject {
         case .music: return 0
         case .time: return 1
         case .weather: return 2
+        case .teleprompter: return 3
         case .alert: return 0
         }
     }
@@ -158,7 +161,7 @@ class IslandManager: ObservableObject {
     
     // MARK: - Swipe Navigation
     var swipableModes: [IslandMode] {
-        return [.music, .time, .weather]
+        return [.music, .time, .weather, .teleprompter]
     }
     
     func swipeNext() {

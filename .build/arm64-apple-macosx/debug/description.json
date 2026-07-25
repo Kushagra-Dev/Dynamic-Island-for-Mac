@@ -44,6 +44,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LyricsScrollerView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicController.swift"
         },
         {
@@ -57,6 +61,18 @@
         {
           "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ScrubberView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/SpeedScrubberView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterIslandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterManager.swift"
         },
         {
           "kind" : "file",
@@ -96,10 +112,14 @@
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/FileLogger.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/IslandManager.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LayoutConstants.swift.o",
+        "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicIslandView.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/NotchBoxApp.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swift.o",
+        "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView.swift.o",
+        "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView.swift.o",
+        "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeIslandView.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TimeManager.swift.o",
         "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ViewHeightKey.swift.o",
@@ -173,6 +193,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o"
         },
         {
@@ -186,6 +210,18 @@
         {
           "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager.swift.o"
         },
         {
           "kind" : "file",
@@ -219,10 +255,14 @@
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/FileLogger.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/IslandManager.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LayoutConstants.swift",
+        "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LyricsScrollerView.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicController.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicIslandView.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/NotchBoxApp.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ScrubberView.swift",
+        "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/SpeedScrubberView.swift",
+        "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterIslandView.swift",
+        "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterManager.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeManager.swift",
         "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ViewHeightKey.swift",
@@ -249,10 +289,14 @@
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/FileLogger.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/IslandManager.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LayoutConstants.swift",
+      "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LyricsScrollerView.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicController.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicIslandView.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/NotchBoxApp.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ScrubberView.swift",
+      "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/SpeedScrubberView.swift",
+      "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterIslandView.swift",
+      "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterManager.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeIslandView.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TimeManager.swift",
       "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ViewHeightKey.swift",
@@ -365,6 +409,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/LyricsScrollerView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/MusicController.swift"
         },
         {
@@ -378,6 +426,18 @@
         {
           "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/ScrubberView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/SpeedScrubberView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterIslandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/Sources/NotchBox/TeleprompterManager.swift"
         },
         {
           "kind" : "file",
@@ -431,6 +491,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/LyricsScrollerView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/MusicController.swift.o"
         },
         {
@@ -444,6 +508,18 @@
         {
           "kind" : "file",
           "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/ScrubberView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/SpeedScrubberView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterIslandView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/kushagra/Desktop/notchProject/.build/arm64-apple-macosx/debug/NotchBox.build/TeleprompterManager.swift.o"
         },
         {
           "kind" : "file",

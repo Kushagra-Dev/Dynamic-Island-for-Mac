@@ -2,10 +2,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var showingVolume = false
+    @State private var showingLyrics = false
     @ObservedObject var musicController: MusicController
     @ObservedObject var islandManager: IslandManager
     @ObservedObject var timeManager: TimeManager
     @ObservedObject var weatherManager: WeatherManager
+    @ObservedObject var teleprompterManager: TeleprompterManager
     
     @State private var isSwiping: Bool = false
     @State private var hasTriggeredPageSwitch: Bool = false
@@ -15,8 +17,12 @@ struct ContentView: View {
     let collapsedWidth: CGFloat = NotchGeometry.getNotchRect().width
     let collapsedHeight: CGFloat = NotchGeometry.getNotchRect().height
     
-    // Globally synced layout constants!
-    let expandedWidth: CGFloat = LayoutConstants.expandedWidth
+    private var currentExpandedWidth: CGFloat {
+        if islandManager.currentMode == .teleprompter {
+            return LayoutConstants.expandedWidth + 70
+        }
+        return LayoutConstants.expandedWidth
+    }
     let expandedHeight: CGFloat = LayoutConstants.expandedHeight
     
     private var activePageIndex: Int {
@@ -24,6 +30,7 @@ struct ContentView: View {
         case .music: return 0
         case .time: return 1
         case .weather: return 2
+        case .teleprompter: return 3
         case .alert: return 0
         }
     }
@@ -49,16 +56,18 @@ struct ContentView: View {
             Group {
                 switch islandManager.currentMode {
                 case .music:
-                    MusicIslandView(musicController: musicController, showingVolume: $showingVolume)
+                    MusicIslandView(musicController: musicController, showingVolume: $showingVolume, showingLyrics: $showingLyrics, islandManager: islandManager)
                 case .time:
                     TimeIslandView(timeManager: timeManager)
                 case .weather:
                     WeatherIslandView(weatherManager: weatherManager)
+                case .teleprompter:
+                    TeleprompterIslandView(manager: teleprompterManager, islandManager: islandManager)
                 case .alert(let title, let systemImage):
                     AlertIslandView(title: title, systemImage: systemImage)
                 }
             }
-            .frame(width: expandedWidth)
+            .frame(width: currentExpandedWidth)
             .fixedSize(horizontal: false, vertical: true)
             .background(
                 GeometryReader { geo in
@@ -80,15 +89,17 @@ struct ContentView: View {
             // ==========================================
             // 2. VISIBLE INTERACTIVE LAYER
             // ==========================================
-            ZStack(alignment: .bottom) {
+            ZStack(alignment: .top) {
                 Group {
                     switch islandManager.currentMode {
                     case .music:
-                        MusicIslandView(musicController: musicController, showingVolume: $showingVolume)
+                        MusicIslandView(musicController: musicController, showingVolume: $showingVolume, showingLyrics: $showingLyrics, islandManager: islandManager)
                     case .time:
                         TimeIslandView(timeManager: timeManager)
                     case .weather:
                         WeatherIslandView(weatherManager: weatherManager)
+                    case .teleprompter:
+                        TeleprompterIslandView(manager: teleprompterManager, islandManager: islandManager)
                     case .alert(let title, let systemImage):
                         AlertIslandView(title: title, systemImage: systemImage)
                     }
@@ -104,24 +115,29 @@ struct ContentView: View {
                 
                 // Page Indicator Dots (Music, Clock, Weather)
                 if islandManager.isExpanded {
-                    HStack(spacing: 6) {
-                        ForEach(Array(islandManager.swipableModes.enumerated()), id: \.offset) { idx, mode in
-                            Capsule()
-                                .fill(activePageIndex == idx ? Color.white : Color.white.opacity(0.25))
-                                .frame(width: activePageIndex == idx ? 14 : 5, height: 5)
-                                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: activePageIndex)
+                    VStack {
+                        Spacer()
+                        HStack(spacing: 6) {
+                            ForEach(Array(islandManager.swipableModes.enumerated()), id: \.offset) { idx, mode in
+                                Capsule()
+                                    .fill(activePageIndex == idx ? Color.white : Color.white.opacity(0.25))
+                                    .frame(width: activePageIndex == idx ? 14 : 5, height: 5)
+                                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: activePageIndex)
+                            }
                         }
+                        .padding(.bottom, 8)
+                        .transition(.opacity)
                     }
-                    .padding(.bottom, 8)
-                    .transition(.opacity)
                 }
             }
             .contentShape(Rectangle()) // Helps with drag gesture hit testing
-            .gesture(
+            .simultaneousGesture(
                 DragGesture()
                     .onChanged { value in
                         if islandManager.isExpanded {
-                            guard !hasTriggeredPageSwitch else { return }
+                            guard !hasTriggeredPageSwitch, !islandManager.isSwipingLocked else { return }
+                            
+                            guard abs(value.translation.width) > abs(value.translation.height) else { return }
                             
                             isSwiping = true
                             dragOffset = value.translation.width * 0.7
@@ -144,6 +160,17 @@ struct ContentView: View {
                     }
                     .onEnded { value in
                         if islandManager.isExpanded && !hasTriggeredPageSwitch {
+                            guard !islandManager.isSwipingLocked, abs(value.translation.width) > abs(value.translation.height) else {
+                                withAnimation(.spring(response: 0.32, dampingFraction: 0.82)) {
+                                    dragOffset = 0
+                                }
+                                hasTriggeredPageSwitch = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                                    isSwiping = false
+                                }
+                                return
+                            }
+                            
                             let translation = value.translation.width
                             let predicted = value.predictedEndTranslation.width
                             
@@ -173,12 +200,12 @@ struct ContentView: View {
                         }
                     }
             )
-            .frame(width: expandedWidth, height: intrinsicHeight, alignment: .top)
+            .frame(width: currentExpandedWidth, height: intrinsicHeight, alignment: .top)
             .opacity(islandManager.isExpanded ? 1.0 : 0.0)
             .scaleEffect(islandManager.isExpanded ? 1.0 : 0.92, anchor: .top)
             .allowsHitTesting(islandManager.isExpanded)
         }
-        .frame(width: islandManager.isExpanded ? expandedWidth : collapsedWidth)
+        .frame(width: islandManager.isExpanded ? currentExpandedWidth : collapsedWidth)
         .frame(height: targetHeight, alignment: .top)
         .background(Color.black)
         .clipShape(UnevenRoundedRectangle(
@@ -201,6 +228,16 @@ struct ContentView: View {
         .padding(.top, 0)
         .onAppear {
             musicController.updateNowPlaying()
+        }
+        .onChange(of: islandManager.isExpanded) { isExpanded in
+            if isExpanded {
+                musicController.updateNowPlaying()
+            }
+        }
+        .onReceive(NSWorkspace.shared.notificationCenter.publisher(for: NSWorkspace.activeSpaceDidChangeNotification)) { _ in
+            if islandManager.isExpanded {
+                musicController.updateNowPlaying()
+            }
         }
         .animation(.spring(response: 0.36, dampingFraction: 0.72), value: islandManager.isExpanded)
         .animation(.spring(response: 0.36, dampingFraction: 0.72), value: intrinsicHeight)
@@ -267,8 +304,6 @@ struct WaveformView: View {
     var color: Color
     
     @State private var heights: [CGFloat] = [6, 6, 6, 6]
-    // A slightly faster, randomized timer for organic movement
-    let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
     
     var body: some View {
         HStack(spacing: 4) {
@@ -282,17 +317,21 @@ struct WaveformView: View {
                     .shadow(color: color, radius: 6) // Intense inner glow
                     .shadow(color: color.opacity(0.6), radius: 12) // Wide outer glow
                     .frame(width: 6, height: isPlaying ? heights[index] : 6)
-                    .animation(.spring(response: 0.25, dampingFraction: 0.65), value: heights[index])
-                    .animation(.spring(response: 0.25, dampingFraction: 0.65), value: isPlaying)
+                    .animation(.easeInOut(duration: 0.15), value: heights[index])
+                    .animation(.easeInOut(duration: 0.15), value: isPlaying)
             }
         }
         .frame(height: 32)
-        .onReceive(timer) { _ in
+        .task(id: isPlaying) {
             if isPlaying {
-                for i in 0..<4 {
-                    // Truly random height for each bar to avoid monotonous patterns
-                    heights[i] = CGFloat.random(in: 8...32)
+                while !Task.isCancelled {
+                    for i in 0..<4 {
+                        heights[i] = CGFloat.random(in: 8...32)
+                    }
+                    try? await Task.sleep(nanoseconds: 150_000_000) // 0.15s
                 }
+            } else {
+                heights = [6, 6, 6, 6]
             }
         }
     }
