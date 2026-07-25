@@ -14,7 +14,7 @@ struct LayoutConstants {
     static var expandedWidth: CGFloat {
         let notchWidth = collapsedWidth
         // Keep the exact same wide aspect ratio relative to the device's actual notch!
-        return max(420, notchWidth * 2.27)
+        return max(CGFloat(420.0), notchWidth * 2.27)
     }
     
     static var expandedHeight: CGFloat {
